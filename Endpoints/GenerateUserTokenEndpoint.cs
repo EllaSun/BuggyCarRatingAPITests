@@ -5,7 +5,7 @@ namespace BuggyCarRating.APItests
     public class GenerateUserTokenEndpoint:RequestBase
 
     {
-        private const string Resource = "/users";
+        private const string Resource = "";
         private const Method method = Method.Post;
         
         public GenerateUserTokenEndpoint() : base(Resource, method) { 

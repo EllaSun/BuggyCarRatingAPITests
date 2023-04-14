@@ -19,6 +19,7 @@ namespace BuggyCarRating.APItests
         protected RestRequest _restRequest = new RestRequest();
         public string RequestBaseUrl { get; set; }
         protected string RequestResource { get; set; }
+        public Method Method { get; set; }
 
       
         
@@ -29,9 +30,10 @@ namespace BuggyCarRating.APItests
         }
 
         public RequestBase(string RequestResource, Method Method)
-        { 
-            RequestResource = RequestResource;
-            Method = Method;
+        {
+            _restRequest.Method = Method;
+            _restRequest.Resource = RequestResource;
+
         }
 
         public RequestBase AddHeader(string key, string value)
@@ -52,6 +54,12 @@ namespace BuggyCarRating.APItests
             return this;
         }
 
+        public RequestBase AddParameter(string key, string value)
+        {
+            _restRequest.AddParameter(key, value);
+            return this;
+        }
+
         public RequestBase SetMethod(Method method)
         {
             _restRequest.Method = method;
@@ -61,8 +69,6 @@ namespace BuggyCarRating.APItests
         public RestClient SetupRestClient()
         {
             var restClient = new RestClient(RequestBaseUrl);
-
-            _restRequest.Resource = RequestResource;
 
             return restClient;
 
@@ -74,8 +80,7 @@ namespace BuggyCarRating.APItests
             {
                
                 var restClient = SetupRestClient();
-          
-
+                
                 RestResponse response = restClient.Execute(_restRequest);
 
                 return response;
